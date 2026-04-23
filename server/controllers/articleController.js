@@ -21,11 +21,21 @@ exports.getArticles = async (req, res) => {
     }
 
     if (category) {
-        query += ' AND c.slug = ?';
+        // Handle both ID (from dashboard) and Slug (from public site)
+        if (!isNaN(category) && category.trim() !== '') {
+            query += ' AND a.category_id = ?';
+        } else {
+            query += ' AND c.slug = ?';
+        }
         params.push(category);
     }
     if (city) {
-        query += ' AND ci.name_ar = ?';
+        // Handle both ID (from dashboard) and Name (from public site)
+        if (!isNaN(city) && city.trim() !== '') {
+            query += ' AND a.city_id = ?';
+        } else {
+            query += ' AND ci.name_ar = ?';
+        }
         params.push(city);
     }
     if (search) {

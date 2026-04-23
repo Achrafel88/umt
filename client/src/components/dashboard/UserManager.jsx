@@ -92,7 +92,7 @@ const UserManager = () => {
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
                         onSubmit={handleSubmit} 
-                        className="bg-gray-50 p-8 rounded-[2.5rem] mb-10 border border-gray-100 shadow-inner space-y-6 overflow-hidden"
+                        className="bg-[#d9f1fc] p-8 rounded-[2.5rem] mb-10 border border-gray-100 shadow-inner space-y-6 overflow-hidden"
                     >
                         <h3 className="text-lg font-black text-gray-800">
                             {editingId ? 'تعديل بيانات المستخدم' : 'إنشاء حساب مستخدم جديد'}
@@ -104,7 +104,7 @@ const UserManager = () => {
                                     type="text" 
                                     value={formData.username} 
                                     onChange={e => setFormData({...formData, username: e.target.value})} 
-                                    className="w-full p-4 bg-white border-none rounded-2xl shadow-sm focus:ring-2 focus:ring-primary-500 font-bold" 
+                                    className="w-full p-4 bg-sky-200/50 backdrop-blur-sm border-none rounded-2xl shadow-sm focus:ring-2 focus:ring-primary-500 font-bold" 
                                     required 
                                 />
                             </div>
@@ -116,7 +116,7 @@ const UserManager = () => {
                                     type="password" 
                                     value={formData.password} 
                                     onChange={e => setFormData({...formData, password: e.target.value})} 
-                                    className="w-full p-4 bg-white border-none rounded-2xl shadow-sm focus:ring-2 focus:ring-primary-500 font-bold" 
+                                    className="w-full p-4 bg-sky-200/50 backdrop-blur-sm border-none rounded-2xl shadow-sm focus:ring-2 focus:ring-primary-500 font-bold" 
                                     required={!editingId}
                                 />
                             </div>
@@ -125,7 +125,7 @@ const UserManager = () => {
                                 <select 
                                     value={formData.role} 
                                     onChange={e => setFormData({...formData, role: e.target.value})}
-                                    className="w-full p-4 bg-white border-none rounded-2xl shadow-sm focus:ring-2 focus:ring-primary-500 font-bold text-gray-700"
+                                    className="w-full p-4 bg-sky-200/50 backdrop-blur-sm border-none rounded-2xl shadow-sm focus:ring-2 focus:ring-primary-500 font-bold text-gray-700"
                                 >
                                     <option value="admin_secondaire">أدمن ثانوي (محرر)</option>
                                     <option value="admin_principal">أدمن رئيسي (مدير)</option>
@@ -143,9 +143,9 @@ const UserManager = () => {
                 )}
             </AnimatePresence>
 
-            <div className="bg-white rounded-[2.5rem] border border-gray-100 overflow-hidden shadow-sm">
+            <div className="bg-sky-200/50 backdrop-blur-sm rounded-[2.5rem] border border-gray-100 overflow-hidden shadow-sm">
                 <table className="w-full text-right border-collapse">
-                    <thead className="bg-gray-50 border-b border-gray-100">
+                    <thead className="bg-[#d9f1fc] border-b border-gray-100">
                         <tr>
                             <th className="p-6 font-black text-xs text-gray-400 uppercase tracking-widest">المستخدم</th>
                             <th className="p-6 font-black text-xs text-gray-400 uppercase tracking-widest">الصلاحية</th>
@@ -155,7 +155,7 @@ const UserManager = () => {
                     </thead>
                     <tbody className="divide-y divide-gray-50">
                         {users.map(u => (
-                            <tr key={u.id} className="hover:bg-gray-50/50 transition-colors group">
+                            <tr key={u.id} className="hover:bg-[#d9f1fc]/50 transition-colors group">
                                 <td className="p-6">
                                     <div className="flex items-center gap-3">
                                         <div className="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center text-gray-400 group-hover:bg-primary-50 group-hover:text-primary-600 transition-colors">

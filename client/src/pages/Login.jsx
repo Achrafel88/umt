@@ -22,11 +22,11 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-[80svh] flex items-center justify-center px-4 bg-gray-50">
+        <div className="min-h-[80svh] flex items-center justify-center px-4 bg-[#d9f1fc]">
             <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-white p-10 rounded-[2.5rem] shadow-xl w-full max-w-md border border-gray-100"
+                className="bg-sky-200/50 backdrop-blur-sm p-10 rounded-[2.5rem] shadow-xl w-full max-w-md border border-gray-100"
             >
                 <div className="flex justify-center mb-8">
                     <div className="w-16 h-16 bg-primary-600 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-primary-600/20">
@@ -56,7 +56,7 @@ const Login = () => {
                                 type="text"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
-                                className="w-full pr-12 pl-4 py-4 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-primary-500 font-bold transition-all"
+                                className="w-full pr-12 pl-4 py-4 bg-[#d9f1fc] border-none rounded-2xl focus:ring-2 focus:ring-primary-500 font-bold transition-all"
                                 placeholder="أدخل اسم المستخدم"
                                 required
                             />
@@ -70,7 +70,7 @@ const Login = () => {
                                 type="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className="w-full pr-12 pl-4 py-4 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-primary-500 font-bold transition-all"
+                                className="w-full pr-12 pl-4 py-4 bg-[#d9f1fc] border-none rounded-2xl focus:ring-2 focus:ring-primary-500 font-bold transition-all"
                                 placeholder="••••••••"
                                 required
                             />

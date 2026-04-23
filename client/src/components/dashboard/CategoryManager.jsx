@@ -62,7 +62,7 @@ const CategoryManager = () => {
         <div>
             <h2 className="text-2xl font-black mb-8">إدارة التصنيفات</h2>
             
-            <form onSubmit={handleSubmit} className="bg-gray-50 p-6 rounded-[2rem] mb-8 flex flex-wrap gap-4 items-end border border-gray-100">
+            <form onSubmit={handleSubmit} className="bg-[#d9f1fc] p-6 rounded-[2rem] mb-8 flex flex-wrap gap-4 items-end border border-gray-100">
                 <div className="flex-grow min-w-[200px]">
                     <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 px-1">اسم التصنيف</label>
                     <input 
@@ -70,7 +70,7 @@ const CategoryManager = () => {
                         placeholder="مثال: أخبار وطنية" 
                         value={name} 
                         onChange={e => setName(e.target.value)} 
-                        className="w-full p-3 bg-white border-none rounded-xl shadow-sm focus:ring-2 focus:ring-primary-500 font-bold" 
+                        className="w-full p-3 bg-sky-200/50 backdrop-blur-sm border-none rounded-xl shadow-sm focus:ring-2 focus:ring-primary-500 font-bold" 
                         required 
                     />
                 </div>
@@ -81,7 +81,7 @@ const CategoryManager = () => {
                         placeholder="national-news" 
                         value={slug} 
                         onChange={e => setSlug(e.target.value)} 
-                        className="w-full p-3 bg-white border-none rounded-xl shadow-sm focus:ring-2 focus:ring-primary-500 font-bold" 
+                        className="w-full p-3 bg-sky-200/50 backdrop-blur-sm border-none rounded-xl shadow-sm focus:ring-2 focus:ring-primary-500 font-bold" 
                         required 
                     />
                 </div>
@@ -92,7 +92,7 @@ const CategoryManager = () => {
 
             <div className="space-y-3">
                 {categories.map(c => (
-                    <div key={c.id} className="flex flex-col sm:flex-row justify-between items-center p-4 bg-white border border-gray-100 rounded-2xl hover:border-primary-200 transition-all shadow-sm gap-4">
+                    <div key={c.id} className="flex flex-col sm:flex-row justify-between items-center p-4 bg-sky-200/50 backdrop-blur-sm border border-gray-100 rounded-2xl hover:border-primary-200 transition-all shadow-sm gap-4">
                         {editingId === c.id ? (
                             <>
                                 <div className="flex flex-grow gap-2 w-full">

@@ -13,6 +13,7 @@ const authorRoutes = require('./routes/authorRoutes');
 const pageRoutes = require('./routes/pageRoutes');
 const adRoutes = require('./routes/adRoutes');
 const userRoutes = require('./routes/userRoutes');
+const contactTeamRoutes = require('./routes/contactTeamRoutes');
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use('/api/authors', authorRoutes);
 app.use('/api/pages', pageRoutes);
 app.use('/api/ads', adRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/contact-team', contactTeamRoutes);
 
 const PORT = process.env.PORT || 5001;
 

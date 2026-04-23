@@ -98,55 +98,22 @@ const NavigationManager = () => {
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
                         onSubmit={handleSubmit} 
-                        className="bg-gray-50 p-8 rounded-[2.5rem] mb-10 border border-gray-100 shadow-inner space-y-6 overflow-hidden"
+                        className="bg-[#d9f1fc] p-8 rounded-[2.5rem] mb-10 border border-gray-100 shadow-inner space-y-6 overflow-hidden"
                     >
                         <h3 className="text-lg font-black text-gray-800">
                             {currentItem.id ? 'تعديل رابط القائمة' : 'إضافة رابط جديد للقائمة'}
                         </h3>
                         
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 gap-6">
                             <div>
                                 <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 px-1">اسم الرابط (بالعربية)</label>
                                 <input
                                     type="text"
                                     value={currentItem.title_ar}
                                     onChange={(e) => setCurrentItem({ ...currentItem, title_ar: e.target.value })}
-                                    className="w-full p-4 bg-white border-none rounded-2xl shadow-sm focus:ring-2 focus:ring-primary-500 font-bold"
+                                    className="w-full p-4 bg-sky-200/50 backdrop-blur-sm border-none rounded-2xl shadow-sm focus:ring-2 focus:ring-primary-500 font-bold"
                                     placeholder="مثال: الرئيسية، أخبارنا..."
                                     required
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 px-1">الرابط / Slug</label>
-                                <input
-                                    type="text"
-                                    value={currentItem.slug}
-                                    onChange={(e) => setCurrentItem({ ...currentItem, slug: e.target.value })}
-                                    className="w-full p-4 bg-white border-none rounded-2xl shadow-sm focus:ring-2 focus:ring-primary-500 font-bold"
-                                    placeholder="/"
-                                    required
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 px-1">النوع</label>
-                                <select
-                                    value={currentItem.type}
-                                    onChange={(e) => setCurrentItem({ ...currentItem, type: e.target.value })}
-                                    className="w-full p-4 bg-white border-none rounded-2xl shadow-sm focus:ring-2 focus:ring-primary-500 font-bold text-gray-700"
-                                >
-                                    <option value="category">تصنيف أخبار</option>
-                                    <option value="page">صفحة تعريفية</option>
-                                    <option value="external">رابط خارجي</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 px-1">ID المرتبط (اختياري)</label>
-                                <input
-                                    type="number"
-                                    value={currentItem.linked_id || ''}
-                                    onChange={(e) => setCurrentItem({ ...currentItem, linked_id: e.target.value })}
-                                    className="w-full p-4 bg-white border-none rounded-2xl shadow-sm focus:ring-2 focus:ring-primary-500 font-bold"
-                                    placeholder="ID للتصنيف أو الصفحة"
                                 />
                             </div>
                         </div>
@@ -161,10 +128,10 @@ const NavigationManager = () => {
                 )}
             </AnimatePresence>
 
-            <div className="bg-white rounded-[2.5rem] border border-gray-100 overflow-hidden shadow-sm">
+            <div className="bg-sky-200/50 backdrop-blur-sm rounded-[2.5rem] border border-gray-100 overflow-hidden shadow-sm">
                 <div className="divide-y divide-gray-50">
                     {items.map((item, index) => (
-                        <div key={item.id} className="flex flex-col sm:flex-row items-center justify-between p-6 hover:bg-gray-50/50 transition-all group gap-4">
+                        <div key={item.id} className="flex flex-col sm:flex-row items-center justify-between p-6 hover:bg-[#d9f1fc]/50 transition-all group gap-4">
                             <div className="flex items-center gap-6 w-full sm:w-auto">
                                 <div className="text-gray-200 font-black text-2xl group-hover:text-primary-100 transition-colors">
                                     {String(index + 1).padStart(2, '0')}

@@ -3,12 +3,10 @@ import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import NavigationManager from '../components/dashboard/NavigationManager';
 import ArticleManager from '../components/dashboard/ArticleManager';
-import CategoryManager from '../components/dashboard/CategoryManager';
 import CityManager from '../components/dashboard/CityManager';
 import AuthorManager from '../components/dashboard/AuthorManager';
 import PageManager from '../components/dashboard/PageManager';
 import AdManager from '../components/dashboard/AdManager';
-import ContactTeamManager from '../components/dashboard/ContactTeamManager';
 import UserManager from '../components/dashboard/UserManager';
 import DashboardHome from '../components/dashboard/DashboardHome';
 import { LayoutDashboard, Newspaper, Settings, MapPin, FileText, Share2, Users, Image as ImageIcon, LogOut, UserCircle } from 'lucide-react';
@@ -34,13 +32,11 @@ const Dashboard = () => {
     const adminTabs = [
         { id: 'home', name: 'الرئيسية', icon: <LayoutDashboard size={18} /> },
         { id: 'articles', name: 'المقالات', icon: <Newspaper size={18} /> },
-        { id: 'navigation', name: 'الملاحة', icon: <Share2 size={18} /> },
-        { id: 'categories', name: 'التصنيفات', icon: <Settings size={18} /> },
+        { id: 'navigation', name: 'إدارة القائمة الرئيسية', icon: <Share2 size={18} /> },
         { id: 'cities', name: 'المدن', icon: <MapPin size={18} /> },
-        { id: 'authors', name: 'الكتاب', icon: <UserCircle size={18} /> },
+        { id: 'authors', name: 'المكاتب النقابية', icon: <UserCircle size={18} /> },
         { id: 'pages', name: 'الصفحات', icon: <FileText size={18} /> },
         { id: 'ads', name: 'الإعلانات', icon: <ImageIcon size={18} /> },
-        { id: 'contact', name: 'فريق التواصل', icon: <Users size={18} /> },
         { id: 'users', name: 'المستخدمين', icon: <Users size={18} /> },
     ];
 
@@ -52,7 +48,7 @@ const Dashboard = () => {
     const tabs = isAdminPrincipal ? adminTabs : secondaryTabs;
 
     return (
-        <div className="min-h-screen bg-[#fcfcfc] pb-20">
+        <div className="min-h-screen bg-[#f8fafc] pb-20">
             <div className="max-w-7xl mx-auto px-4 py-8">
                 {/* Header Card */}
                 <div className="bg-white p-8 rounded-[2.5rem] shadow-sm border border-gray-100 mb-10 flex flex-col md:flex-row justify-between items-center gap-6">
@@ -112,12 +108,10 @@ const Dashboard = () => {
                             {activeTab === 'home' && <DashboardHome />}
                             {activeTab === 'articles' && <ArticleManager />}
                             {activeTab === 'navigation' && <NavigationManager />}
-                            {activeTab === 'categories' && <CategoryManager />}
                             {activeTab === 'cities' && <CityManager />}
                             {activeTab === 'authors' && <AuthorManager />}
                             {activeTab === 'pages' && <PageManager />}
                             {activeTab === 'ads' && <AdManager />}
-                            {activeTab === 'contact' && <ContactTeamManager />}
                             {activeTab === 'users' && <UserManager />}
                         </div>
                     </div>

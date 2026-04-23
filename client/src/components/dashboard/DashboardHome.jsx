@@ -58,14 +58,14 @@ const DashboardHome = () => {
                             {card.icon}
                         </div>
                         <p className="text-gray-400 font-bold text-xs uppercase tracking-widest mb-1">{card.title}</p>
-                        <h3 className="text-3xl font-black">{card.value}</h3>
+                        <h3 className="text-3xl font-black text-gray-800">{card.value}</h3>
                     </motion.div>
                 ))}
             </div>
 
-            <div className="mt-12 bg-primary-50 p-8 rounded-[2.5rem] border border-primary-100">
-                <h3 className="text-xl font-black text-primary-900 mb-2">مرحباً بك في لوحة تحكم UMT</h3>
-                <p className="text-primary-700 font-medium">يمكنك من هنا إدارة كافة محتويات المنصة، من الأخبار والأنشطة النقابية إلى الإعلانات والقوائم البريدية.</p>
+            <div className="mt-12 bg-gray-50 p-8 rounded-[2.5rem] border border-gray-100">
+                <h3 className="text-xl font-black text-gray-900 mb-2">مرحباً بك في لوحة تحكم UMT</h3>
+                <p className="text-gray-600 font-medium">يمكنك من هنا إدارة كافة محتويات المنصة، من الأخبار والأنشطة النقابية إلى الإعلانات والقوائم البريدية.</p>
             </div>
         </div>
     );

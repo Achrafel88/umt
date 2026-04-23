@@ -62,7 +62,7 @@ const CityManager = () => {
                 إدارة المدن
             </h2>
             
-            <form onSubmit={handleSubmit} className="bg-gray-50 p-6 rounded-[2rem] mb-8 flex gap-4 items-end border border-gray-100">
+            <form onSubmit={handleSubmit} className="bg-[#d9f1fc] p-6 rounded-[2rem] mb-8 flex gap-4 items-end border border-gray-100">
                 <div className="flex-grow">
                     <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 px-1">اسم المدينة</label>
                     <input 
@@ -70,7 +70,7 @@ const CityManager = () => {
                         placeholder="مثال: الدار البيضاء" 
                         value={name} 
                         onChange={e => setName(e.target.value)} 
-                        className="w-full p-3 bg-white border-none rounded-xl shadow-sm focus:ring-2 focus:ring-primary-500 font-bold" 
+                        className="w-full p-3 bg-sky-200/50 backdrop-blur-sm border-none rounded-xl shadow-sm focus:ring-2 focus:ring-primary-500 font-bold" 
                         required 
                     />
                 </div>
@@ -81,7 +81,7 @@ const CityManager = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {cities.map(c => (
-                    <div key={c.id} className="flex justify-between items-center p-4 bg-white border border-gray-100 rounded-2xl hover:border-primary-200 transition-all shadow-sm">
+                    <div key={c.id} className="flex justify-between items-center p-4 bg-sky-200/50 backdrop-blur-sm border border-gray-100 rounded-2xl hover:border-primary-200 transition-all shadow-sm">
                         {editingId === c.id ? (
                             <div className="flex gap-2 w-full">
                                 <input 

@@ -1,4 +1,3 @@
-
 CREATE DATABASE IF NOT EXISTS umtdata CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE umtdata;
 
@@ -55,11 +54,11 @@ CREATE TABLE IF NOT EXISTS articles (
     real_author_id INT, -- Secondary admin who created
     status ENUM('pending', 'published') DEFAULT 'pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (category_id) REFERENCES categories(id),
-    FOREIGN KEY (city_id) REFERENCES cities(id),
-    FOREIGN KEY (author_id) REFERENCES authors(id),
-    FOREIGN KEY (validator_id) REFERENCES users(id),
-    FOREIGN KEY (real_author_id) REFERENCES users(id)
+    CONSTRAINT fk_category FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL,
+    CONSTRAINT fk_city FOREIGN KEY (city_id) REFERENCES cities(id) ON DELETE SET NULL,
+    CONSTRAINT fk_author FOREIGN KEY (author_id) REFERENCES authors(id) ON DELETE SET NULL,
+    CONSTRAINT fk_validator FOREIGN KEY (validator_id) REFERENCES users(id) ON DELETE SET NULL,
+    CONSTRAINT fk_real_author FOREIGN KEY (real_author_id) REFERENCES users(id) ON DELETE SET NULL
 );
 
 -- Navigation table
@@ -82,4 +81,25 @@ CREATE TABLE IF NOT EXISTS advertisements (
     link_url VARCHAR(255),
     position ENUM('header', 'sidebar') NOT NULL,
     is_active BOOLEAN DEFAULT TRUE
+);
+
+-- Contact Team table
+CREATE TABLE IF NOT EXISTS contact_team (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    role VARCHAR(255) NOT NULL,
+    facebook VARCHAR(255),
+    image_url VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Contact Messages table
+CREATE TABLE IF NOT EXISTS contact_messages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    subject VARCHAR(255),
+    message TEXT NOT NULL,
+    status ENUM('unread', 'read') DEFAULT 'unread',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

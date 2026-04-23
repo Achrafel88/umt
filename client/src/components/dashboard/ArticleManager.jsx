@@ -13,6 +13,8 @@ const ArticleManager = () => {
     const [cities, setCities] = useState([]);
     const [authors, setAuthors] = useState([]);
     const [filterStatus, setFilterStatus] = useState('pending'); // pending, published, all
+    const [filterCategory, setFilterCategory] = useState('');
+    const [filterCity, setFilterCity] = useState('');
 
     const [formData, setFormData] = useState({
         title: '',
@@ -27,13 +29,21 @@ const ArticleManager = () => {
     });
 
     useEffect(() => {
-        fetchArticles();
         fetchMetadata();
-    }, [filterStatus]);
+    }, []);
+
+    useEffect(() => {
+        fetchArticles();
+    }, [filterStatus, filterCategory, filterCity]);
 
     const fetchArticles = async () => {
         try {
-            const res = await api.get(`/articles?status=${filterStatus}`);
+            const params = {};
+            if (filterStatus && filterStatus !== 'all') params.status = filterStatus;
+            if (filterCategory) params.category = filterCategory;
+            if (filterCity) params.city = filterCity;
+
+            const res = await api.get('/articles', { params });
             setArticles(res.data);
         } catch (err) {
             console.error(err);
@@ -144,29 +154,59 @@ const ArticleManager = () => {
                 )}
             </div>
 
-            {/* Status Filter Tabs */}
-            <div className="flex bg-gray-100 p-1 rounded-2xl mb-8 w-full max-w-md">
-                <button 
-                    onClick={() => setFilterStatus('pending')}
-                    className={`flex-grow flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-black transition-all ${filterStatus === 'pending' ? 'bg-white text-primary-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
-                >
-                    <Clock size={16} />
-                    في انتظار التفعيل
-                </button>
-                <button 
-                    onClick={() => setFilterStatus('published')}
-                    className={`flex-grow flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-black transition-all ${filterStatus === 'published' ? 'bg-white text-primary-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
-                >
-                    <Check size={16} />
-                    المنشورة
-                </button>
-                <button 
-                    onClick={() => setFilterStatus('all')}
-                    className={`flex-grow flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-black transition-all ${filterStatus === 'all' ? 'bg-white text-primary-600 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
-                >
-                    <Filter size={16} />
-                    الكل
-                </button>
+            {/* Status & Category Filters */}
+            <div className="flex flex-col md:flex-row gap-4 mb-8">
+                <div className="flex bg-gray-50 p-1 rounded-2xl w-full max-w-md border border-gray-100 h-fit">
+                    <button 
+                        onClick={() => setFilterStatus('pending')}
+                        className={`flex-grow flex items-center justify-center gap-2 py-3 rounded-xl text-xs font-black transition-all ${filterStatus === 'pending' ? 'bg-[#0000ff] text-white shadow-lg shadow-blue-600/20' : 'text-gray-500 hover:text-gray-800'}`}
+                    >
+                        <Clock size={14} />
+                        <span>في انتظار التفعيل</span>
+                    </button>
+                    <button 
+                        onClick={() => setFilterStatus('published')}
+                        className={`flex-grow flex items-center justify-center gap-2 py-3 rounded-xl text-xs font-black transition-all ${filterStatus === 'published' ? 'bg-[#0000ff] text-white shadow-lg shadow-blue-600/20' : 'text-gray-500 hover:text-gray-800'}`}
+                    >
+                        <Check size={14} />
+                        <span>المنشورة</span>
+                    </button>
+                    <button 
+                        onClick={() => setFilterStatus('all')}
+                        className={`flex-grow flex items-center justify-center gap-2 py-3 rounded-xl text-xs font-black transition-all ${filterStatus === 'all' ? 'bg-[#0000ff] text-white shadow-lg shadow-blue-600/20' : 'text-gray-500 hover:text-gray-800'}`}
+                    >
+                        <Filter size={14} />
+                        <span>الكل</span>
+                    </button>
+                </div>
+
+                <div className="flex gap-2 flex-grow">
+                    <select 
+                        value={filterCategory}
+                        onChange={(e) => setFilterCategory(e.target.value)}
+                        className="flex-grow p-3 bg-white border border-gray-200 rounded-2xl focus:ring-4 focus:ring-[#0000ff]/10 focus:border-[#0000ff] transition-all text-sm font-black text-gray-600 appearance-none text-center cursor-pointer hover:bg-gray-50 h-[52px]"
+                    >
+                        <option value="">جميع التصنيفات</option>
+                        {categories.map(c => <option key={c.id} value={c.id}>{c.name_ar}</option>)}
+                    </select>
+                    <select 
+                        value={filterCity}
+                        onChange={(e) => setFilterCity(e.target.value)}
+                        className="flex-grow p-3 bg-white border border-gray-200 rounded-2xl focus:ring-4 focus:ring-[#0000ff]/10 focus:border-[#0000ff] transition-all text-sm font-black text-gray-600 appearance-none text-center cursor-pointer hover:bg-gray-50 h-[52px]"
+                    >
+                        <option value="">جميع المدن</option>
+                        {cities.map(c => <option key={c.id} value={c.id}>{c.name_ar}</option>)}
+                    </select>
+                    {(filterCategory || filterCity || filterStatus !== 'pending') && (
+                        <button 
+                            onClick={() => { setFilterCategory(''); setFilterCity(''); setFilterStatus('all'); }}
+                            className="p-3 bg-red-50 text-red-500 rounded-2xl hover:bg-red-100 transition-all flex items-center justify-center h-[52px] min-w-[52px]"
+                            title="تفريغ الفلاتر"
+                        >
+                            <X size={20} />
+                        </button>
+                    )}
+                </div>
             </div>
 
             <AnimatePresence>
@@ -176,7 +216,7 @@ const ArticleManager = () => {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
                         onSubmit={handleSubmit} 
-                        className="bg-gray-50 p-8 rounded-[2.5rem] mb-10 grid grid-cols-1 md:grid-cols-2 gap-6 border border-gray-100 shadow-inner"
+                        className="bg-gray-50 p-8 rounded-[2.5rem] mb-10 grid grid-cols-1 md:grid-cols-2 gap-6 border border-gray-100 shadow-sm"
                     >
                         <h3 className="md:col-span-2 text-lg font-black text-gray-800">
                             {editingId ? 'تعديل المقال' : 'إضافة مقال جديد'}
@@ -187,7 +227,7 @@ const ArticleManager = () => {
                                 type="text"
                                 value={formData.title}
                                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                                className="w-full p-4 bg-white border-none rounded-2xl shadow-sm focus:ring-2 focus:ring-primary-500 font-bold"
+                                className="w-full p-4 bg-white border border-gray-100 rounded-2xl shadow-sm focus:ring-2 focus:ring-primary-500 font-bold"
                                 placeholder="أدخل العنوان هنا..."
                                 required
                             />
@@ -197,17 +237,17 @@ const ArticleManager = () => {
                             <textarea
                                 value={formData.content}
                                 onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                                className="w-full p-4 bg-white border-none rounded-2xl shadow-sm focus:ring-2 focus:ring-primary-500 font-medium h-48"
+                                className="w-full p-4 bg-white border border-gray-100 rounded-2xl shadow-sm focus:ring-2 focus:ring-primary-500 font-medium h-48"
                                 placeholder="اكتب نص المقال بالتفصيل..."
                                 required
                             />
                         </div>
                         <div>
-                            <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 px-1">التصنيف</label>
+                            <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 px-1">تصنيف أخبار</label>
                             <select
                                 value={formData.category_id}
                                 onChange={(e) => setFormData({ ...formData, category_id: e.target.value })}
-                                className="w-full p-4 bg-white border-none rounded-2xl shadow-sm focus:ring-2 focus:ring-primary-500 font-bold text-gray-700"
+                                className="w-full p-4 bg-white border border-gray-100 rounded-2xl shadow-sm focus:ring-2 focus:ring-primary-500 font-bold text-gray-700"
                                 required
                             >
                                 <option value="">اختر التصنيف</option>
@@ -219,7 +259,7 @@ const ArticleManager = () => {
                             <select
                                 value={formData.city_id}
                                 onChange={(e) => setFormData({ ...formData, city_id: e.target.value })}
-                                className="w-full p-4 bg-white border-none rounded-2xl shadow-sm focus:ring-2 focus:ring-primary-500 font-bold text-gray-700"
+                                className="w-full p-4 bg-white border border-gray-100 rounded-2xl shadow-sm focus:ring-2 focus:ring-primary-500 font-bold text-gray-700"
                                 required
                             >
                                 <option value="">اختر المدينة</option>
@@ -227,14 +267,14 @@ const ArticleManager = () => {
                             </select>
                         </div>
                         <div>
-                            <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 px-1">الكاتب</label>
+                            <label className="block text-xs font-black text-gray-400 uppercase tracking-widest mb-2 px-1">المكاتب النقابية</label>
                             <select
                                 value={formData.author_id}
                                 onChange={(e) => setFormData({ ...formData, author_id: e.target.value })}
-                                className="w-full p-4 bg-white border-none rounded-2xl shadow-sm focus:ring-2 focus:ring-primary-500 font-bold text-gray-700"
+                                className="w-full p-4 bg-white border border-gray-100 rounded-2xl shadow-sm focus:ring-2 focus:ring-primary-500 font-bold text-gray-700"
                                 required
                             >
-                                <option value="">اختر الكاتب</option>
+                                <option value="">اختر المكتب النقابي</option>
                                 {authors.map(a => <option key={a.id} value={a.id}>{a.name_ar}</option>)}
                             </select>
                         </div>
@@ -271,11 +311,11 @@ const ArticleManager = () => {
                     </div>
                 ) : (
                     articles.map(article => (
-                        <div key={article.id} className="group flex flex-col sm:flex-row items-start sm:items-center justify-between p-5 bg-white border border-gray-100 rounded-3xl hover:border-primary-200 hover:shadow-md transition-all gap-4">
+                        <div key={article.id} className="group flex flex-col sm:flex-row items-start sm:items-center justify-between p-5 bg-white border border-gray-100 rounded-3xl hover:border-primary-200 hover:shadow-lg hover:shadow-primary-600/5 transition-all gap-4">
                             <div className="flex items-center gap-5 w-full">
-                                <div className="w-20 h-20 rounded-2xl overflow-hidden bg-gray-100 shadow-inner flex-shrink-0">
+                                <div className="w-20 h-20 rounded-2xl overflow-hidden bg-gray-50 shadow-inner flex-shrink-0 border border-gray-50">
                                     {article.image_url ? (
-                                        <img src={`http://localhost:5001${article.image_url}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="" />
+                                        <img src={`http://localhost:5001${article.image_url}`} className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500" alt="" />
                                     ) : (
                                         <div className="w-full h-full flex items-center justify-center text-gray-300"><Newspaper size={24} /></div>
                                     )}
@@ -285,13 +325,13 @@ const ArticleManager = () => {
                                         <span className="text-[10px] font-black px-2 py-0.5 bg-primary-50 text-primary-600 rounded-md uppercase tracking-wider whitespace-nowrap">{article.category_name}</span>
                                         <span className="text-[10px] font-bold text-gray-400 whitespace-nowrap">{article.city_name}</span>
                                     </div>
-                                    <h3 className="font-black text-gray-800 line-clamp-1">{article.title}</h3>
-                                    <p className="text-xs text-gray-400 font-medium mt-1 truncate">الكاتب: {article.author_name} • {new Date(article.created_at).toLocaleDateString('ar-EG')}</p>
+                                    <h3 className="font-black text-gray-800 line-clamp-1 group-hover:text-primary-600 transition-colors">{article.title}</h3>
+                                    <p className="text-xs text-gray-400 font-medium mt-1 truncate">المكتب النقابي: {article.author_name} • {new Date(article.created_at).toLocaleDateString('ar-EG')}</p>
                                 </div>
                             </div>
                             <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
-                                <button onClick={() => startEdit(article)} className="p-2 text-blue-500 hover:bg-blue-50 rounded-xl transition-colors"><Edit2 size={18} /></button>
-                                <button onClick={() => handleDelete(article.id)} className="p-2 text-primary-600 hover:bg-primary-50 rounded-xl transition-colors"><Trash2 size={18} /></button>
+                                <button onClick={() => startEdit(article)} className="p-2 text-blue-500 hover:bg-blue-50 rounded-xl transition-colors" title="تعديل"><Edit2 size={18} /></button>
+                                <button onClick={() => handleDelete(article.id)} className="p-2 text-primary-600 hover:bg-primary-50 rounded-xl transition-colors" title="حذف"><Trash2 size={18} /></button>
                                 
                                 {user.role === 'admin_principal' && article.status === 'pending' && (
                                     <button 
